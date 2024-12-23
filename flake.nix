@@ -10,7 +10,15 @@
     ...
   }: (utils.lib.eachDefaultSystem (
     system: let
-      pkgs = import nixpkgs {inherit system;};
+      pkgs = import nixpkgs {
+        inherit system;
+
+        config = {
+          permittedInsecurePackages = [
+            "qtwebkit-5.212.0-alpha4"
+          ];
+        };
+      };
       packages.default = packages.aftershot;
       packages.aftershot = pkgs.callPackage ./aftershot.nix {};
       apps.default = apps.aftershot;
